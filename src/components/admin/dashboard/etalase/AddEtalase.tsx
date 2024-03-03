@@ -1,24 +1,9 @@
 import CardFlat from '@/components/Card/CardFlat'
 import CardWithTitle from '@/components/Card/CardWithTitle'
-import React, { useState } from 'react'
+import React from 'react'
 import { TextInput, Label, Select } from 'flowbite-react';
 
 const AddEtalase = () => {
-
-    const [images, setImages] = useState([]);
-
-    const handleImageUpload = (e: any) => {
-        const uploadedImages = [...images];
-        uploadedImages.push(e.target.files[0]);
-        setImages(uploadedImages);
-    };
-
-    const handleImageDelete = (index: any) => {
-        const updatedImages = [...images];
-        updatedImages.splice(index, 1);
-        setImages(updatedImages);
-    };
-
 
     return (
         <CardWithTitle className='my-5 lg:col-span-8 col-span-12' title="Tambah Kategori">
