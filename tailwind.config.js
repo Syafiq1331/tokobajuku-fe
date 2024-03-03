@@ -14,11 +14,17 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors : {
-        primary : '#4ade80'
+        primary : '#4ade80',
+        secondary : '#0f172a',
+        third : '#ffc107',
+        forty : '#394eea',
+        warning : '#fb160a',
       }
     },
   },
   plugins: [
-    require("flowbite/plugin")
+    require('flowbite/plugin')({
+      charts: true,
+  }),
   ],
 }
