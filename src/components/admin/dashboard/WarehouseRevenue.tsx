@@ -14,7 +14,7 @@ const WarehouseRevenue = () => {
         <CardFlat title="Statistik order" className='lg:col-span-4 col-span-12'>
             {/* Component MonthYearPicker */}
             <div className='pt-2'>
-                <MonthYearPicker selectedDate={selectedDate} onDateChange={handleDateChange} />
+                <MonthYearPicker selectedDate={selectedDate} onDateChange={handleDateChange} startYear={0} endYear={0} />
             </div>
             <div className='flex justify-start gap-x-16 py-2 pt-4'>
                 <div>
