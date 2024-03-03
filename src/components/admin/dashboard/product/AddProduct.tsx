@@ -1,7 +1,8 @@
 import CardFlat from '@/components/Card/CardFlat'
 import CardWithTitle from '@/components/Card/CardWithTitle'
 import React, { useState } from 'react'
-import { TextInput, Label, Select, FileInput, Textarea } from 'flowbite-react';
+import { TextInput, Label, Select, Textarea } from 'flowbite-react';
+import Image from 'next/image';
 
 /**
  * Function for adding a product.
@@ -99,7 +100,7 @@ const AddProduct = () => {
                     <div className="flex flex-wrap gap-4">
                         {images.map((image, index) => (
                             <div key={index} className="relative">
-                                <img src={URL.createObjectURL(image)} alt={`Preview ${index}`} className="w-1/2 object-cover" />
+                                <Image src={URL.createObjectURL(image)} alt={`Preview ${index}`} className="w-1/2 object-cover" />
                                 <button onClick={() => handleImageDelete(index)} className="absolute top-0 left-1 bg-red-500 p-2 text-white rounded-full">
                                     <p className='text-sm'>X</p>
                                 </button>
