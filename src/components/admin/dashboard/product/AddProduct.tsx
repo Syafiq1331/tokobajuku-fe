@@ -12,11 +12,6 @@ const AddProduct = () => {
 
     const [images, setImages] = useState<File[]>([]);
 
-    /**
-     * Handles the image upload when a file input changes.
-     *
-     * @param {React.ChangeEvent<HTMLInputElement>} e - The event triggered by the file input change
-     */
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const uploadedFile = e.target.files?.[0]; // Null check here
         if (uploadedFile) {
@@ -26,11 +21,6 @@ const AddProduct = () => {
         }
     };
 
-    /**
-     *
-     * @param {any} index - the index of the image to be deleted
-     * @return {void} 
-     */
     const handleImageDelete = (index: any) => {
         const updatedImages = [...images];
         updatedImages.splice(index, 1);
