@@ -39,53 +39,45 @@ const Sidebar: React.FC<SidebarProps> = ({ className }: SidebarProps) => {
             <FlowbiteSidebar aria-label="Default sidebar example" className='h-full'>
                 <FlowbiteSidebar.Items className='h-full'>
                     <FlowbiteSidebar.ItemGroup>
-                        <FlowbiteSidebar.Item icon={HiChartPie}>
-                            <Link href="/admin/dashboard/app">
-                                Dashboard
-                            </Link>
-                        </FlowbiteSidebar.Item>
-                        <FlowbiteSidebar.Item icon={HiViewBoards}>
-                            <Link href="/admin/product/app">
-                                Product
-                                <span>
-                                    <a href="#"></a>
-                                </span>
-                            </Link>
-                        </FlowbiteSidebar.Item>
-                        <FlowbiteSidebar.Item icon={HiInbox}>
-                            <Link href="/admin/category/app">
-                                Category
-                                <span>
-                                    <a href="#"></a>
-                                </span>
-                            </Link>
-                        </FlowbiteSidebar.Item>
-                        <FlowbiteSidebar.Item icon={HiUser}>
-                            <Link href="/admin/etalase/app">
-                                Etalase
-                                <span>
-                                    <a href="#"></a>
-                                </span>
-                            </Link>
-                        </FlowbiteSidebar.Item>
-                        <FlowbiteSidebar.Item icon={HiShoppingBag}>
-                            <Link href="/admin/monitoring/app">
-                                Monitoring Admin
-                                <span>
-                                    <a href="#"></a>
-                                </span>
-                            </Link>
-                        </FlowbiteSidebar.Item>
-                        <FlowbiteSidebar.Item icon={HiArrowSmRight}>
-                            <Link href="/admin/keuangan/app">
-                                Perhitungan Keuangan
-                                <span>
-                                    <a href="#"></a>
-                                </span>
-                            </Link>
-                        </FlowbiteSidebar.Item>
+                        <Link href="/admin/dashboard/app" passHref legacyBehavior>
+                            <div className='flex items-center gap-x-2 py-2'>
+                                <p><HiChartPie className='text-2xl text-secondary' /></p>
+                                <p className='text-md text-secondary'>Dashboard</p>
+                            </div>
+                        </Link>
+                        <Link href="/admin/product/app" passHref legacyBehavior>
+                            <div className='flex items-center gap-x-2 py-2'>
+                                <p><HiViewBoards className='text-2xl text-secondary' /></p>
+                                <p className='text-md text-secondary'>Product</p>
+                            </div>
+                        </Link>
+                        <Link href="/admin/category/app" passHref legacyBehavior>
+                            <div className='flex items-center gap-x-2 py-2'>
+                                <p><HiInbox className='text-2xl text-secondary' /></p>
+                                <p className='text-md text-secondary'>Category</p>
+                            </div>
+                        </Link>
+                        <Link href="/admin/etalase/app" passHref legacyBehavior>
+                            <div className='flex items-center gap-x-2 py-2'>
+                                <p><HiUser className='text-2xl text-secondary' /></p>
+                                <p className='text-md text-secondary'>Etalase</p>
+                            </div>
+                        </Link>
+                        <Link href="/admin/monitoring/app" passHref legacyBehavior>
+                            <div className='flex items-center gap-x-2 py-2'>
+                                <p><HiShoppingBag className='text-2xl text-secondary' /></p>
+                                <p className='text-md text-secondary'>Monitoring Admin</p>
+                            </div>
+                        </Link>
+                        <Link href="/admin/keuangan/app" passHref legacyBehavior>
+                            <div className='flex items-center gap-x-2 py-2'>
+                                <p><HiArrowSmRight className='text-2xl text-secondary' /></p>
+                                <p className='text-md text-secondary'>Perhitungan Keuangan</p>
+                            </div>
+                        </Link>
                     </FlowbiteSidebar.ItemGroup>
                 </FlowbiteSidebar.Items>
+
             </FlowbiteSidebar>
         </div>
     )
