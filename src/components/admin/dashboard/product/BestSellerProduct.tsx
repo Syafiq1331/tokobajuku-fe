@@ -8,21 +8,26 @@ const BestSellerProduct = () => {
 
   const DummyData = [
     { id: 1, name: 'Kaos Minion Anak', imageSrc: '/sampleKaos.png', sold: 100, rating: 5 },
-    { id: 2, name: 'Kemeja Polos Dewasa', imageSrc: '/sampleKemeja.png', sold: 80, rating: 4 },
-    { id: 3, name: 'Topi Baseball Anak', imageSrc: '/sampleTopi.png', sold: 120, rating: 5 },
-    { id: 4, name: 'Sepatu Sneakers Anak', imageSrc: '/sampleSepatu.png', sold: 90, rating: 4 },
-    { id: 5, name: 'Celana Jeans Dewasa', imageSrc: '/sampleCelana.png', sold: 70, rating: 3 },
+    { id: 2, name: 'Kemeja Polos Dewasa', imageSrc: '/sampleKaos.png', sold: 80, rating: 4 },
+    { id: 3, name: 'Topi Baseball Anak', imageSrc: '/sampleKaos.png', sold: 120, rating: 5 },
+    { id: 4, name: 'Sepatu Sneakers Anak', imageSrc: '/sampleKaos.png', sold: 90, rating: 4 },
+    { id: 5, name: 'Celana Jeans Dewasa', imageSrc: '/sampleKaos.png', sold: 70, rating: 3 },
   ];
 
   const [scrollX, setScrollX] = useState(0);
 
   const handleScroll = (direction: any) => {
     const container = document.getElementById('cardContainer');
-    const scrollStep = 100;
-    const scrollWidth = direction === 'right' ? scrollStep : -scrollStep;
-    container.scrollBy({ left: scrollWidth, behavior: 'smooth' });
-    setScrollX(scrollX + scrollWidth);
+    if (container) {
+      const scrollStep = 100;
+      const scrollWidth = direction === 'right' ? scrollStep : -scrollStep;
+      container.scrollBy({ left: scrollWidth, behavior: 'smooth' });
+      setScrollX(scrollX + scrollWidth);
+    } else {
+      console.warn("Container not found!");
+    }
   };
+
 
   return (
     <CardWithTitle className='my-5 lg:col-span-6 col-span-12 shadow-lg' title="Product best sellers">

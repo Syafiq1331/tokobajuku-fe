@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 const WarehouseRevenue = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const handleDateChange = (date:any) => {
+    const handleDateChange = (date: any) => {
         setSelectedDate(date);
     };
 

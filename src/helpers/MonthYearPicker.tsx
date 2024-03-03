@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 
 interface MonthYearPickerProps {
-    startYear: number;
+    selectedDate: Date;
+    onDateChange: (date: Date) => void;
+    startYear: number; // Add startYear property to the interface
     endYear: number;
 }
 
-const MonthYearPicker: React.FC<MonthYearPickerProps> = ({ startYear, endYear }) => {
+const MonthYearPicker: React.FC<MonthYearPickerProps> = ({ selectedDate, onDateChange, startYear, endYear }) => {
     const months = [
         'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
         'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
     ];
 
-    const years = Array.from({length: endYear - startYear + 1}, (_, index) => startYear + index); // Generate array of years based on startYear and endYear
+    const years = Array.from({ length: endYear - startYear + 1 }, (_, index) => startYear + index); // Generate array of years based on startYear and endYear
 
     const [isOpenMonth, setIsOpenMonth] = useState(false);
     const [isOpenYear, setIsOpenYear] = useState(false);
