@@ -1,6 +1,5 @@
 import React from 'react';
 import CardFlat from '@/components/Card/CardFlat'
-import ListProduct from '@/components/admin/dashboard/product/ListProduct'
 import Layout from '@/components/admin/layout/Layout'
 import AddProduct from '@/components/admin/dashboard/product/AddProduct';
 
