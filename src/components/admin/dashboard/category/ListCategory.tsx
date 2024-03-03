@@ -63,7 +63,7 @@ const ListCategory = () => {
     return (
         <>
             <div className='flex justify-end'>
-                <Link href="/admin/category/add-monitoring">
+                <Link href="/admin/category/add-category">
                     <button className='bg-primary text-white px-4 py-2 rounded-lg'>
                         Tambah Category
                     </button>

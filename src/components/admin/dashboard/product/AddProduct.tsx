@@ -10,12 +10,20 @@ import { TextInput, Label, Select, FileInput, Textarea } from 'flowbite-react';
  */
 const AddProduct = () => {
 
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState<File[]>([]);
 
-    const handleImageUpload = (e: any) => {
-        const uploadedImages = [...images];
-        uploadedImages.push(e.target.files[0]);
-        setImages(uploadedImages);
+    /**
+     * Handles the image upload when a file input changes.
+     *
+     * @param {React.ChangeEvent<HTMLInputElement>} e - The event triggered by the file input change
+     */
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const uploadedFile = e.target.files?.[0]; // Null check here
+        if (uploadedFile) {
+            const uploadedImages = [...images];
+            uploadedImages.push(uploadedFile);
+            setImages(uploadedImages);
+        }
     };
 
     /**
@@ -45,10 +53,11 @@ const AddProduct = () => {
                             <Label htmlFor="ukuranProduct" value="Ukuran Product" />
                         </div>
                         <Select id="ukuranProduct" required>
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilihan Ukuran Baju</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
                         </Select>
                     </div>
                     <div className="max-w-md my-2">
@@ -56,10 +65,11 @@ const AddProduct = () => {
                             <Label htmlFor="brandProduct" value="Brand Product" />
                         </div>
                         <Select id="brandProduct" required>
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilihan Etalase Baju</option>
+                            <option value="Distro Ubuntu">Distro Ubuntu</option>
+                            <option value="Eleknia">Eleknia</option>
+                            <option value="FzAuth">FzAuth</option>
+                            <option value="Kostku">Kostku</option>
                         </Select>
                     </div>
                 </div>
@@ -72,13 +82,14 @@ const AddProduct = () => {
                     </div>
                     <div className="max-w-md my-2">
                         <div className="mb-2 block">
-                            <Label htmlFor="ukuranProduct" value="Etalase Product" />
+                            <Label htmlFor="ukuranProduct" value="Category Product" />
                         </div>
                         <Select id="ukuranProduct" required>
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilihan Category Baju</option>
+                            <option value="Kaos Anak">Kaos Anak</option>
+                            <option value="Kaos Polos Anak">Kaos Polos Anak</option>
+                            <option value="Kaos Distro Polos">Kaos Distro Polos</option>
+                            <option value="Kaos Distro">Kaos Distro</option>
                         </Select>
                     </div>
                     <div className="max-w-md my-2">
@@ -98,9 +109,9 @@ const AddProduct = () => {
                     <div className="flex flex-wrap gap-4">
                         {images.map((image, index) => (
                             <div key={index} className="relative">
-                                <img src={URL.createObjectURL(image)} alt={`Preview ${index}`} className="w-40 h-40 object-cover" />
-                                <button onClick={() => handleImageDelete(index)} className="absolute top-0 right-0 bg-red-500 text-white p-1.5 rounded-full">
-                                    X
+                                <img src={URL.createObjectURL(image)} alt={`Preview ${index}`} className="w-1/2 object-cover" />
+                                <button onClick={() => handleImageDelete(index)} className="absolute top-0 left-1 bg-red-500 p-2 text-white rounded-full">
+                                    <p className='text-sm'>X</p>
                                 </button>
                             </div>
                         ))}
