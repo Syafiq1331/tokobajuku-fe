@@ -19,6 +19,7 @@ module.exports = {
         third : '#ffc107',
         forty : '#394eea',
         warning : '#fb160a',
+        backgroundLogin : '#F0FDF4'
       }
     },
   },
