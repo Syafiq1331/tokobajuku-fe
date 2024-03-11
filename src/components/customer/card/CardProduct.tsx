@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import React from 'react';
-import { Card } from 'flowbite-react';
+import { HiOutlineHeart, HiOutlineInformationCircle } from 'react-icons/hi';
 
 interface Product {
     id: number;
@@ -8,6 +9,8 @@ interface Product {
     title: string;
     rating: number;
     price: number;
+    discount?: number;
+    reviewers?: number;
 }
 
 interface CardProductProps {
@@ -16,45 +19,36 @@ interface CardProductProps {
 
 const CardProduct: React.FC<CardProductProps> = ({ product }) => {
     return (
-        <Card
-            className="max-w-sm lg:col-span-3 col-span-6"
-            imgAlt={product.imgAlt}
-            imgSrc={product.imgSrc}
-        >
-            <a href="#">
-                <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                    {product.title}
-                </h5>
-            </a>
-            <div className="mb-5 mt-2.5 flex items-center">
-                {/* Rendering rating stars */}
-                {Array.from({ length: product.rating }).map((_, index) => (
-                    <svg
-                        key={index}
-                        className="h-5 w-5 text-yellow-300"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        {/* Star SVG path */}
-                    </svg>
-                ))}
-                <span className="ml-3 mr-2 rounded bg-cyan-100 px-2.5 py-0.5 text-xs font-semibold text-cyan-800 dark:bg-cyan-200 dark:text-cyan-800">
-                    {product.rating}
-                </span>
+        <div className="max-w-xs rounded overflow-hidden shadow-lg lg:col-span-3 col-span-12 relative">
+            <div className="flex justify-between items-center p-4 absolute right-0">
+                <div className="flex justify-end flex-col relative">
+                    <button className="flex items-center text-gray-500 border border-white bg-white rounded-full p-1 mb-1">
+                        <HiOutlineInformationCircle className="text-2xl text-black" />
+                    </button>
+                    <button className="flex items-center text-gray-500 border border-white bg-white rounded-full p-1">
+                        <HiOutlineHeart className="text-2xl text-black" />
+                    </button>
+                </div>
             </div>
-            <div className="flex flex-wrap items-center justify-between">
-                <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                    ${product.price}
-                </span>
-                <a
-                    href="#"
-                    className="rounded-lg mt-4 bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
-                >
-                    Add to cart
-                </a>
+            <div className=' p-4 bg-secondary/10'>
+                <img className="w-4/5 mx-auto" src={product.imgSrc} alt={product.imgAlt} />
             </div>
-        </Card>
+            <div className="px-6 py-4">
+                <div className="text-xl mb-2">{product.title}</div>
+                <div className="flex flex-wrap lg:flex-nowrap gap-x-4 mt-2">
+                    <p className="text-primary text-lg">{`Rp. ${product.discount}`}</p>
+                    <p className="text-secondary/60 text-lg line-through line-through/20">{`Rp. ${product.price}`}</p>
+                </div>
+                <p className="text-gray-700 flex-wrap lg:flex-nowrap flex gap-x-2 items-center text-base my-3">
+                    <span className="text-yellow-500 flex gap-x-2">
+                        {[...Array(product.rating)].map((_, index) => (
+                            <Image key={index} src="/icons/star.svg" alt="star" width={15} height={15} />
+                        ))}
+                    </span>
+                    <span className='pt-1'>( {product.reviewers} )</span>
+                </p>
+            </div>
+        </div>
     );
 }
 
