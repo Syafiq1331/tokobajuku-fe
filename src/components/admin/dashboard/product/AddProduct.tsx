@@ -20,7 +20,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         // Fetch categories from API
-        fetch('http://tokobajuku.syafiqrzf.my.id/api/category')
+        fetch('https://tokobajuku.syafiqrzf.my.id/api/category')
             .then(response => response.json())
             .then(data => {
                 setCategories(data.data);
@@ -34,7 +34,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         // Fetch categories from API
-        fetch('http://tokobajuku.syafiqrzf.my.id/api/etalase')
+        fetch('https://tokobajuku.syafiqrzf.my.id/api/etalase')
             .then(response => response.json())
             .then(data => {
                 setEtalases(data.data);
@@ -76,7 +76,7 @@ const AddProduct = () => {
             });
 
             // Submit form data to API
-            const response = await fetch('http://tokobajuku.syafiqrzf.my.id/api/product', {
+            const response = await fetch('https://tokobajuku.syafiqrzf.my.id/api/product', {
                 method: 'POST',
                 body: formData
             });
