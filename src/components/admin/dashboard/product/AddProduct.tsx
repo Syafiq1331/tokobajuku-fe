@@ -2,6 +2,11 @@ import CardWithTitle from '@/components/Card/CardWithTitle';
 import React, { useState, useEffect } from 'react';
 import { Label, Select, TextInput, Textarea } from 'flowbite-react';
 
+interface Category {
+    name: string;
+    // other properties if there are any
+}
+
 const AddProduct = () => {
     const [productName, setProductName] = useState('');
     const [productPrice, setProductPrice] = useState('');
@@ -10,7 +15,7 @@ const AddProduct = () => {
     const [productEtalase, setProductEtalase] = useState('');
     const [productDescription, setProductDescription] = useState('');
     const [images, setImages] = useState<File[]>([]);
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [etalases, setEtalases] = useState([]);
 
     useEffect(() => {
@@ -41,7 +46,7 @@ const AddProduct = () => {
             .catch(error => console.error('Error fetching categories:', error));
     }, []);
 
-    const handleImageUpload = (e) => {
+    const handleImageUpload = (e: any) => {
         const uploadedFile = e.target.files?.[0];
         if (uploadedFile) {
             const uploadedImages = [...images];
@@ -127,7 +132,7 @@ const AddProduct = () => {
                         </div>
                         <Select id="productCategory" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required>
                             <option value="">Pilihan Category Baju</option>
-                            {categories.map(category => (
+                            {categories.map((category: any) => (
                                 <option key={category.id} value={category.name}>{category.name}</option>
                             ))}
                         </Select>
@@ -138,7 +143,7 @@ const AddProduct = () => {
                         </div>
                         <Select id="productCategory" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required>
                             <option value="">Pilihan Etalase Baju</option>
-                            {etalases.map(category => (
+                            {etalases.map((category: any) => (
                                 <option key={category.id} value={category.name}>{category.name}</option>
                             ))}
                         </Select>
