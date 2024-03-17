@@ -1,64 +1,51 @@
 import CardWithTitle from '@/components/Card/CardWithTitle';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HiPencil, HiTrash, HiOutlineInformationCircle } from 'react-icons/hi';
 import { Table } from 'flowbite-react';
 import Link from 'next/link';
 
 const ListCategory = () => {
     const [pageNumber, setPageNumber] = useState(0);
+    const [categoryData, setCategoryData] = useState([]);
     const usersPerPage = 5;
     const pagesVisited = pageNumber * usersPerPage;
 
-    const DummyData = [
-        { id: '1.', name: 'Kaos Anak', status: true },
-        { id: '2', name: 'Kaos Polos Anak', status: false },
-        { id: '3', name: 'Kaos Distro Polos', status: true },
-        { id: '4', name: 'Kaos Distro', status: true },
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://tokobajuku.syafiqrzf.my.id/api/category');
+                const data = await response.json();
+                setCategoryData(data.data);
+            } catch (error) {
+                console.error('Error fetching category data:', error);
+            }
+        };
 
-    const pageCount = Math.ceil(DummyData.length / usersPerPage);
+        fetchData();
+    }, []);
+
+    const pageCount = Math.ceil(categoryData.length / usersPerPage);
 
     const changePage = (selectedPage: any) => {
         setPageNumber(selectedPage);
     };
 
-    const displayData = DummyData
-        .slice(pagesVisited, pagesVisited + usersPerPage)
-        .map(item => (
-            <Table.Row key={item.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell>{item.id}</Table.Cell>
-                <Table.Cell>{item.name}</Table.Cell>
-                <Table.Cell>
-                    {item.status ? (
-                        <button className="bg-primary text-white py-2 px-4 rounded-lg w-full">
-                            Pusblished
-                        </button>
-                    ) : (
-                        <button className="bg-third text-white py-2 px-4 rounded-lg w-full">
-                            Unpublish
-                        </button>
-                    )}
-                </Table.Cell>
-                <Table.Cell className='text-center'>
-                    {/* Tombol Delete */}
-                    <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg mr-2">
-                        <HiTrash className="inline-block mr-1" />
-                        Delete
-                    </button>
-                    {/* Tombol Edit */}
-                    <button className="bg-third hover:bg-blue-700 text-white py-2 px-4 rounded-lg mr-2">
-                        <HiPencil className="inline-block mr-1" />
-                        Edit
-                    </button>
-                    {/* Tombol Detail */}
-                    <button className="bg-primary hover:bg-gray-700 text-white py-2 px-4 rounded-lg">
-                        <HiOutlineInformationCircle className="inline-block mr-1" />
-                        Detail
-                    </button>
-                </Table.Cell>
-
-            </Table.Row>
-        ));
+    const handleDelete = async (id: any) => {
+        try {
+            const response = await fetch(`http://tokobajuku.syafiqrzf.my.id/api/category/${id}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                // Refresh data setelah berhasil menghapus
+                const newData = categoryData.filter((item: { id: any }) => item.id !== id);
+                setCategoryData(newData);
+            } else {
+                console.error('Gagal menghapus kategori');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
     return (
         <>
@@ -79,7 +66,42 @@ const ListCategory = () => {
                             <th className='pl-6 text-secondary text-center'>Action</th>
                         </Table.Head>
                         <Table.Body className="divide-y">
-                            {displayData}
+                            {categoryData
+                                .slice(pagesVisited, pagesVisited + usersPerPage)
+                                .map((item: any, index) => (
+                                    <Table.Row key={item.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                        <Table.Cell>{index + 1}</Table.Cell>
+                                        <Table.Cell>{item.name}</Table.Cell>
+                                        <Table.Cell>
+                                            {item.status ? (
+                                                <button className="bg-primary text-white py-2 px-4 rounded-lg w-full">
+                                                    Published
+                                                </button>
+                                            ) : (
+                                                <button className="bg-third text-white py-2 px-4 rounded-lg w-full">
+                                                    Unpublished
+                                                </button>
+                                            )}
+                                        </Table.Cell>
+                                        <Table.Cell className='text-center'>
+                                            {/* Tombol Delete */}
+                                            <button onClick={() => handleDelete(item.id)} className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg mr-2">
+                                                <HiTrash className="inline-block mr-1" />
+                                                Delete
+                                            </button>
+                                            {/* Tombol Edit */}
+                                            <button className="bg-third hover:bg-blue-700 text-white py-2 px-4 rounded-lg mr-2">
+                                                <HiPencil className="inline-block mr-1" />
+                                                Edit
+                                            </button>
+                                            {/* Tombol Detail */}
+                                            <button className="bg-primary hover:bg-gray-700 text-white py-2 px-4 rounded-lg">
+                                                <HiOutlineInformationCircle className="inline-block mr-1" />
+                                                Detail
+                                            </button>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                ))}
                         </Table.Body>
                     </Table>
                     <div className="flex justify-center mt-4">
