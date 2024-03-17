@@ -13,7 +13,7 @@ const AddEtalase = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://tokobajuku.syafiqrzf.my.id/api/etalase', {
+            const response = await fetch('https://tokobajuku.syafiqrzf.my.id/api/etalase', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
