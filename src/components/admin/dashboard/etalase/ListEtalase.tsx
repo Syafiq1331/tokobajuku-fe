@@ -13,7 +13,7 @@ const ListEtalase = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://tokobajuku.syafiqrzf.my.id/api/etalase');
+                const response = await fetch('https://tokobajuku.syafiqrzf.my.id/api/etalase');
                 const data = await response.json();
                 setBrandData(data.data);
             } catch (error) {
@@ -32,7 +32,7 @@ const ListEtalase = () => {
 
     const handleDelete = async (id: any) => {
         try {
-            const response = await fetch(`http://tokobajuku.syafiqrzf.my.id/api/etalase/${id}`, {
+            const response = await fetch(`https://tokobajuku.syafiqrzf.my.id/api/etalase/${id}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
