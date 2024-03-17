@@ -21,7 +21,7 @@ const AddCategory = () => {
     const handleSubmit = async (event: any) => {
         event.preventDefault();
         try {
-            const response = await fetch('http://tokobajuku.syafiqrzf.my.id/api/category', {
+            const response = await fetch('https://tokobajuku.syafiqrzf.my.id/api/category', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

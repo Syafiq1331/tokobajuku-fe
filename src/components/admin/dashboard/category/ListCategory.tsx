@@ -13,7 +13,7 @@ const ListCategory = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://tokobajuku.syafiqrzf.my.id/api/category');
+                const response = await fetch('https://tokobajuku.syafiqrzf.my.id/api/category');
                 const data = await response.json();
                 setCategoryData(data.data);
             } catch (error) {
@@ -32,7 +32,7 @@ const ListCategory = () => {
 
     const handleDelete = async (id: any) => {
         try {
-            const response = await fetch(`http://tokobajuku.syafiqrzf.my.id/api/category/${id}`, {
+            const response = await fetch(`https://tokobajuku.syafiqrzf.my.id/api/category/${id}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
