@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Sidebar as FlowbiteSidebar } from 'flowbite-react';
-import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from 'react-icons/hi';
+import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards, HiUsers } from 'react-icons/hi';
 import Link from 'next/link';
 
 interface SidebarProps {
@@ -61,6 +61,12 @@ const Sidebar: React.FC<SidebarProps> = ({ className }: SidebarProps) => {
                             <div className='flex items-center gap-x-2 py-2'>
                                 <p><HiUser className='text-2xl text-secondary' /></p>
                                 <p className='text-md text-secondary'>Etalase</p>
+                            </div>
+                        </Link>
+                        <Link href="/admin/brand/app" passHref legacyBehavior>
+                            <div className='flex items-center gap-x-2 py-2'>
+                                <p><HiUsers className='text-2xl text-secondary' /></p>
+                                <p className='text-md text-secondary'>Brand Admin</p>
                             </div>
                         </Link>
                         <Link href="/admin/monitoring/app" passHref legacyBehavior>
