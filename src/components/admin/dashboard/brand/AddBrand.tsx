@@ -13,7 +13,7 @@ const AddBrand = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://tokobajuku.syafiqrzf.my.id/api/brand', {
+            const response = await fetch('https://tokobajuku.syafiqrzf.my.id/api/brand', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

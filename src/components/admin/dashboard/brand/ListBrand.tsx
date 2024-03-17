@@ -13,7 +13,7 @@ const ListBrand = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://tokobajuku.syafiqrzf.my.id/api/brand');
+                const response = await fetch('https://tokobajuku.syafiqrzf.my.id/api/brand');
                 const data = await response.json();
                 setBrandData(data.data);
             } catch (error) {
@@ -32,7 +32,7 @@ const ListBrand = () => {
 
     const handleDelete = async (id: any) => {
         try {
-            const response = await fetch(`http://tokobajuku.syafiqrzf.my.id/api/brand/${id}`, {
+            const response = await fetch(`https://tokobajuku.syafiqrzf.my.id/api/brand/${id}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
