@@ -1,20 +1,48 @@
-import CardFlat from '@/components/Card/CardFlat'
-import CardWithTitle from '@/components/Card/CardWithTitle'
-import React, { useState } from 'react'
-import { TextInput, Label, Select, Textarea } from 'flowbite-react';
-import Image from 'next/image';
+import CardWithTitle from '@/components/Card/CardWithTitle';
+import React, { useState, useEffect } from 'react';
+import { Label, Select, TextInput, Textarea } from 'flowbite-react';
 
-/**
- * Function for adding a product.
- *
- * @return {void} 
- */
 const AddProduct = () => {
-
+    const [productName, setProductName] = useState('');
+    const [productPrice, setProductPrice] = useState('');
+    const [productSize, setProductSize] = useState('');
+    const [productCategory, setProductCategory] = useState('');
+    const [productEtalase, setProductEtalase] = useState('');
+    const [productDescription, setProductDescription] = useState('');
     const [images, setImages] = useState<File[]>([]);
+    const [categories, setCategories] = useState([]);
+    const [etalases, setEtalases] = useState([]);
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const uploadedFile = e.target.files?.[0]; // Null check here
+    useEffect(() => {
+        // Fetch categories from API
+        fetch('http://tokobajuku.syafiqrzf.my.id/api/category')
+            .then(response => response.json())
+            .then(data => {
+                setCategories(data.data);
+                // Set default category
+                if (data.length > 0) {
+                    setProductCategory(data[0].name);
+                }
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }, []);
+
+    useEffect(() => {
+        // Fetch categories from API
+        fetch('http://tokobajuku.syafiqrzf.my.id/api/etalase')
+            .then(response => response.json())
+            .then(data => {
+                setEtalases(data.data);
+                // Set default category
+                if (data.length > 0) {
+                    setProductEtalase(data[0].name);
+                }
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }, []);
+
+    const handleImageUpload = (e) => {
+        const uploadedFile = e.target.files?.[0];
         if (uploadedFile) {
             const uploadedImages = [...images];
             uploadedImages.push(uploadedFile);
@@ -28,22 +56,64 @@ const AddProduct = () => {
         setImages(updatedImages);
     };
 
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        try {
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('name', productName);
+            formData.append('price', productPrice);
+            formData.append('size', productSize);
+            formData.append('category', productCategory);
+            formData.append('description', productDescription);
+            images.forEach(image => {
+                formData.append('images[]', image);
+            });
+
+            // Submit form data to API
+            const response = await fetch('http://tokobajuku.syafiqrzf.my.id/api/product', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                console.log('Product added successfully');
+                // Reset form fields
+                setProductName('');
+                setProductPrice('');
+                setProductSize('');
+                setProductCategory(categories.length > 0 ? categories[0].name : '');
+                setProductDescription('');
+                setImages([]);
+            } else {
+                console.error('Failed to add product');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
     return (
         <CardWithTitle className='my-5 lg:col-span-8 col-span-12' title="Tambah Product">
-            <div className='grid grid-cols-12 gap-x-4 gap-y-2'>
-                <div className='col-span-4'>
-                    <div className='my-2'>
-                        <div className="mb-2 block">
-                            <Label htmlFor="small" value="Nama Product" />
+            <form onSubmit={handleSubmit}>
+                <div className='grid grid-cols-12 gap-x-4 gap-y-2'>
+                    <div className='col-span-4'>
+                        <div className='my-2'>
+                            <Label htmlFor="productName" value="Nama Product" />
                         </div>
-                        <TextInput id="small" type="text" sizing="sm" />
+                        <TextInput id="productName" type="text" value={productName} onChange={(e) => setProductName(e.target.value)} required />
                     </div>
-                    <div className="max-w-md my-2">
+                    <div className="max-w-md col-span-4">
                         <div className="mb-2 block">
-                            <Label htmlFor="ukuranProduct" value="Ukuran Product" />
+                            <Label htmlFor="productPrice" value="Harga Product" />
                         </div>
-                        <Select id="ukuranProduct" required>
+                        <TextInput id="productPrice" type="text" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} required />
+                    </div>
+                    <div className="max-w-md col-span-4">
+                        <div className="mb-2 block">
+                            <Label htmlFor="productSize" value="Ukuran Product" />
+                        </div>
+                        <Select id="productSize" value={productSize} onChange={(e) => setProductSize(e.target.value)} required>
                             <option value="">Pilihan Ukuran Baju</option>
                             <option value="M">M</option>
                             <option value="L">L</option>
@@ -51,72 +121,38 @@ const AddProduct = () => {
                             <option value="XXL">XXL</option>
                         </Select>
                     </div>
-                    <div className="max-w-md my-2">
+                    <div className="col-span-4">
                         <div className="mb-2 block">
-                            <Label htmlFor="brandProduct" value="Brand Product" />
+                            <Label htmlFor="productCategory" value="Category Product" />
                         </div>
-                        <Select id="brandProduct" required>
-                            <option value="">Pilihan Etalase Baju</option>
-                            <option value="Distro Ubuntu">Distro Ubuntu</option>
-                            <option value="Eleknia">Eleknia</option>
-                            <option value="FzAuth">FzAuth</option>
-                            <option value="Kostku">Kostku</option>
-                        </Select>
-                    </div>
-                </div>
-                <div className='col-span-4'>
-                    <div className='my-2'>
-                        <div className="mb-2 block">
-                            <Label htmlFor="small" value="Harga Product" />
-                        </div>
-                        <TextInput id="small" type="text" sizing="sm" />
-                    </div>
-                    <div className="max-w-md my-2">
-                        <div className="mb-2 block">
-                            <Label htmlFor="ukuranProduct" value="Category Product" />
-                        </div>
-                        <Select id="ukuranProduct" required>
+                        <Select id="productCategory" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required>
                             <option value="">Pilihan Category Baju</option>
-                            <option value="Kaos Anak">Kaos Anak</option>
-                            <option value="Kaos Polos Anak">Kaos Polos Anak</option>
-                            <option value="Kaos Distro Polos">Kaos Distro Polos</option>
-                            <option value="Kaos Distro">Kaos Distro</option>
+                            {categories.map(category => (
+                                <option key={category.id} value={category.name}>{category.name}</option>
+                            ))}
                         </Select>
                     </div>
-                    <div className="max-w-md my-2">
-                        <div>
-                            <Label htmlFor="upload" value="Upload Image" />
-                            <input type="file" id="upload" accept="image/*" onChange={handleImageUpload} className="mt-2" />
+                    <div className="col-span-4">
+                        <div className="mb-2 block">
+                            <Label htmlFor="productCategory" value="Etalase Product" />
                         </div>
+                        <Select id="productCategory" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required>
+                            <option value="">Pilihan Etalase Baju</option>
+                            {etalases.map(category => (
+                                <option key={category.id} value={category.name}>{category.name}</option>
+                            ))}
+                        </Select>
                     </div>
                 </div>
-                <div className="max-w-md col-span-4">
-                    <div className="mb-2 block">
-                        <Label htmlFor="comment" value="Your message" />
-                    </div>
-                    <Textarea id="comment" placeholder="Leave a comment..." required rows={10} />
+                <hr className='my-4' />
+                <div className='flex justify-end'>
+                    <button type="submit" className='bg-primary text-white px-4 py-2 rounded-lg'>
+                        Simpan
+                    </button>
                 </div>
-                <div className="col-span-6">
-                    <div className="flex flex-wrap gap-4">
-                        {images.map((image, index) => (
-                            <div key={index} className="relative">
-                                <Image src={URL.createObjectURL(image)} alt={`Preview ${index}`} className="w-1/2 object-cover" />
-                                <button onClick={() => handleImageDelete(index)} className="absolute top-0 left-1 bg-red-500 p-2 text-white rounded-full">
-                                    <p className='text-sm'>X</p>
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            <hr className='my-4' />
-            <div className='flex justify-end'>
-                <button className='bg-primary text-white px-4 py-2 rounded-lg'>
-                    Simpan
-                </button>
-            </div>
+            </form>
         </CardWithTitle>
     )
 }
 
-export default AddProduct
+export default AddProduct;
